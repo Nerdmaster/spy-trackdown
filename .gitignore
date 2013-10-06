@@ -1,0 +1,2 @@
+# Don't accidentally add config to repo
+/config.inc.php

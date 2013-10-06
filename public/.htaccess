@@ -1,0 +1,19 @@
+Options All -Indexes
+
+DirectoryIndex router.php
+
+<Files .htaccess>
+  Order Allow,Deny
+  Deny from all
+</Files>
+
+<ifmodule mod_deflate.c="">
+  <filesmatch ".(js|css|.jpg|.gif|.png|.tiff|.ico)$"="">
+    SetOutputFilter DEFLATE
+  </filesmatch>
+</ifmodule>
+
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ router.php?url=$1 [L,QSA]
