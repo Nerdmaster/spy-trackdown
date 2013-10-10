@@ -24,6 +24,7 @@ if (in_array($controller_name, $controllers)) {
 }
 
 header('HTTP/1.1 404 Not Found');
+echo "The resource you requested does not exist.  Please double-check your URL and try again.";
 exit(0);
 
 ?>
