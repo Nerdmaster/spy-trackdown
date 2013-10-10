@@ -1,16 +1,29 @@
 <?php
 
 require_once(__DIR__ . "/../root.php");
-echo APPNAME . "<br />\n";
 
 // Parse the URL
 $path = array_key_exists("url", $_GET) ? $_GET["url"] : "/";
 
+// Whitelist of "controllers" (this will be a VERY loose MVC kind of thing)
+$controllers = array("home");
+
+// Get the path elements and specifically the controller name
+$path_elements = explode("/", $path);
+$controller_name = array_unshift($path_elements);
+
 if (empty($path) || $path == "/") {
-  echo "Welcome!";
-  exit;
+  $controller_name = "home";
 }
 
-echo "Unknown Request";
+if (in_array($controller_name, $controllers)) {
+  $class = ucfirst($controller_name) . "Controller";
+  require_class("controllers/$class");
+  $controller = new $class($path_elements);
+  print $controller->render();
+}
+
+header('HTTP/1.1 404 Not Found');
+exit(0);
 
 ?>
