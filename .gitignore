@@ -1,2 +1,5 @@
 # Don't accidentally add config to repo
 /config.inc.php
+
+# Ignore vendor files - composer stuff
+/vendor
