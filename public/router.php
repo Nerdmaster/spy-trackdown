@@ -10,7 +10,7 @@ $controllers = array("home");
 
 // Get the path elements and specifically the controller name
 $path_elements = explode("/", $path);
-$controller_name = array_unshift($path_elements);
+$controller_name = array_shift($path_elements);
 
 if (empty($path) || $path == "/") {
   $controller_name = "home";
