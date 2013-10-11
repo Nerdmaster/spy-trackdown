@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {% block head %}
+      <link rel="stylesheet" href="style.css" />
+      <title>{{title}} - Spy Trackdown</title>
+    {% endblock %}
+  </head>
+
+  <body>
+    <h1>{{title}}</h1>
+
+    <div id="content">{% block content %}{% endblock %}</div>
+
+    <footer>
+      {% block footer %}
+      &copy; Copyright 2013
+      {% endblock %}
+    </footer>
+  </body>
+</html>

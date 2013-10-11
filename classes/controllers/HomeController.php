@@ -1,11 +1,11 @@
 <?php
 
-class HomeController {
-  public function __construct($path_array) {
-  }
+require_once("BaseController.php");
 
+class HomeController extends BaseController{
   public function render() {
-    print "<h1>" . APPNAME . "</h1>\n";
-    print "Welcome!";
+    $this->render_template("home.html", array(
+      "title" => "Welcome"
+    ));
   }
 }
