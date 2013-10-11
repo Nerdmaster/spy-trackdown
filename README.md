@@ -18,6 +18,8 @@ Installing
 * Point Apache to the `public` directory.  It's best not to allow Apache
   to serve the root of the application, though it does need to have read
   access everywhere in the app.
+* Give Apache rights to read all files in the app, and to write to the
+  top-level `template-cache` directory.
 * Set up directories and URL paths in `config.inc.php` to match your web
   server.
 
