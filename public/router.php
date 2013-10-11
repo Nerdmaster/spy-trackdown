@@ -21,6 +21,7 @@ if (in_array($controller_name, $controllers)) {
   require_class("controllers/$class");
   $controller = new $class($path_elements);
   print $controller->render();
+  exit(0);
 }
 
 header('HTTP/1.1 404 Not Found');
