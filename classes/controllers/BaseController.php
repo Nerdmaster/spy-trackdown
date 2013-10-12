@@ -12,10 +12,12 @@ abstract class BaseController {
 
   public function __construct($path_array) {
     $this->loader = new Twig_Loader_Filesystem(ROOT . '/templates');
-    $this->twig = new Twig_Environment($this->loader, array(
-      'cache' => ROOT . '/template-cache',
-    ));
 
+    $env_config = array();
+    if (PRODUCTION) {
+      $env_config["cache"] = ROOT . '/template-cache';
+    }
+    $this->twig = new Twig_Environment($this->loader, $env_config);
     $this->path_array = $path_array;
   }
 
