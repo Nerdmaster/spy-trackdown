@@ -1,21 +1,32 @@
 <!DOCTYPE html>
 <html>
   <head>
-    {% block head %}
-      <link rel="stylesheet" href="style.css" />
-      <title>{{title}} - Spy Trackdown</title>
-    {% endblock %}
+    <title>{{title}} - {{APPNAME}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{WEBROOT}}/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{WEBROOT}}/css/style.css" rel="stylesheet">
   </head>
 
   <body>
-    <h1>{{title}}</h1>
+    <div id="wrap">
+      <div class="container">
+        <div class="page-header">
+          <h1>{% block header %}{{title}}{% endblock %}</h1>
+        </div>
 
-    <div id="content">{% block content %}{% endblock %}</div>
+        {% block content %}{% endblock %}</div>
+      </div>
 
-    <footer>
-      {% block footer %}
-      &copy; Copyright 2013
-      {% endblock %}
-    </footer>
+      <div id="footer">
+        <div class="container">
+          <p class="text-muted">
+            &copy; Copyright 2013 <a href="http://nerdbucket.com">Nerdbucket</a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script src="{{WEBROOT}}/js/jquery-2.0.3.min.js"></script>
+    <script src="{{WEBROOT}}/bootstrap/js/bootstrap.min.js"></script>
   </body>
 </html>

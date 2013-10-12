@@ -1,7 +1,15 @@
 {% extends "layout.html" %}
 
+{% block header %}
+  Welcome to {{APPNAME}}
+{% endblock %}
+
 {% block content %}
-Start a new game
-<br /><br />
-Resume a game
+<p>
+  <a href="/games/new" class="btn btn-primary btn-lg">Start a new game</a>
+</p>
+
+<p>
+  <a href="/games/login" class="btn btn-primary btn-lg">Resume a game</a>
+</p>
 {% endblock %}

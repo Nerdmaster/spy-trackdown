@@ -29,6 +29,7 @@ abstract class BaseController {
 
     // Default variables - passed-in $variables can override these
     $defaults = array(
+      "WEBROOT" => WEBROOT,
       "APPNAME" => APPNAME
     );
 
