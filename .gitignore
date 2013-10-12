@@ -3,3 +3,6 @@
 
 # Ignore vendor files - composer stuff
 /vendor
+
+# Ignore template cache
+/template-cache
