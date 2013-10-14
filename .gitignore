@@ -5,4 +5,4 @@
 /vendor
 
 # Ignore template cache
-/template-cache
+/.template-cache

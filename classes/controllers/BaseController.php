@@ -15,7 +15,7 @@ abstract class BaseController {
 
     $env_config = array();
     if (PRODUCTION) {
-      $env_config["cache"] = ROOT . '/template-cache';
+      $env_config["cache"] = ROOT . '/.template-cache';
     }
     $this->twig = new Twig_Environment($this->loader, $env_config);
     $this->path_array = $path_array;
