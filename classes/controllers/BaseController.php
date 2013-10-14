@@ -33,7 +33,7 @@ abstract class BaseController {
       "APPNAME" => APPNAME
     );
 
-    echo $template->render(array_merge($defaults, $variables));
+    return $template->render(array_merge($defaults, $variables));
   }
 
   abstract public function render();
