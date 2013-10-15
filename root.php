@@ -10,6 +10,15 @@ function require_class($name) {
   require_once(ROOT . "/classes/$name.php");
 }
 
+/**
+ * Logs stuff if DEBUG is true
+ */
+function debug($message) {
+  if (DEBUG === true) {
+    error_log("DEBUG: $message");
+  }
+}
+
 // Include config as all parts of the app need it
 require_once("config.inc.php");
 require_once(ROOT . '/vendor/autoload.php');
