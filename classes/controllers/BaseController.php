@@ -10,6 +10,28 @@ abstract class BaseController {
   /** Array of path elements (after the controller) */
   protected $path_array;
 
+  /** Template to render - not set on errors */
+  protected $template;
+
+  /** Local variables for a controller to set as necessary for templates */
+  protected $variables;
+
+  /**
+   * Error status to print out, such as "HTTP/1.1 404 Not Found".  Setting this causes template
+   * processing and output to be skipped.
+   *
+   * TODO: let subclass just throw an exception and use a lookup to produce message -
+   * e.g., MissingResource would cause a 404, AccessDenied 403, unknown exceptions 500, etc
+   *
+   * TODO: Allow status without text to just render the template for contextual messages (i.e.,
+   * use $text or something to allow rendering custom text within layout, and just spit out the
+   * appropriate headers based on exceptions as mentioned above)
+   */
+  protected $error_status;
+
+  /** Currently just for error text output.  FIXME!!  */
+  protected $text;
+
   public function __construct($path_array) {
     $this->loader = new Twig_Loader_Filesystem(ROOT . '/templates');
 
@@ -22,10 +44,26 @@ abstract class BaseController {
   }
 
   /**
+   * Dispatches to subclass process() method and then determines what to render
+   */
+  public function render() {
+    $this->process();
+
+    if ($this->error_status) {
+      // TODO: Make this render within the layout
+      header($this->error_status);
+      print $this->text;
+      exit(1);
+    }
+
+    $this->render_template();
+  }
+
+  /**
    * Renders the template passed in with the given variables
    */
-  public function render_template($template, $variables = array()) {
-    $template = $this->twig->loadTemplate($template);
+  public function render_template() {
+    $template = $this->twig->loadTemplate($this->template);
 
     // Default variables - passed-in $variables can override these
     $defaults = array(
@@ -33,8 +71,11 @@ abstract class BaseController {
       "APPNAME" => APPNAME
     );
 
-    return $template->render(array_merge($defaults, $variables));
+    print $template->render(array_merge($defaults, $this->variables));
   }
 
-  abstract public function render();
+  /**
+   * This is where the controller needs to set up its template or errors
+   */
+  abstract public function process();
 }

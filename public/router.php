@@ -20,7 +20,7 @@ if (in_array($controller_name, $controllers)) {
   $class = ucfirst($controller_name) . "Controller";
   require_class("controllers/$class");
   $controller = new $class($path_elements);
-  print $controller->render();
+  $controller->render();
   exit(0);
 }
 
