@@ -6,7 +6,7 @@ require_once(__DIR__ . "/../root.php");
 $path = array_key_exists("url", $_GET) ? $_GET["url"] : "/";
 
 // Whitelist of "controllers" (this will be a VERY loose MVC kind of thing)
-$controllers = array("home");
+$controllers = array("home", "games");
 
 // Get the path elements and specifically the controller name
 $path_elements = explode("/", $path);
