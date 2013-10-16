@@ -59,7 +59,14 @@ class GamesController extends BaseController{
 
     $game->set_name(Utils::generate_name());
 
-    $game->start();
+    try {
+      $game->start();
+    }
+    catch (Exception $e) {
+      $this->template = "games/new_form.html";
+      $this->variables = array("title" => "New Game", "errors" => array($e->getMessage()));
+      return;
+    }
 
     print_r($game);
 

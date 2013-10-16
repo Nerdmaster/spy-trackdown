@@ -68,7 +68,8 @@ abstract class BaseController {
     // Default variables - passed-in $variables can override these
     $defaults = array(
       "WEBROOT" => WEBROOT,
-      "APPNAME" => APPNAME
+      "APPNAME" => APPNAME,
+      "errors" => array(),
     );
 
     print $template->render(array_merge($defaults, $this->variables));
