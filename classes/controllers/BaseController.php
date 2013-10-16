@@ -27,7 +27,7 @@ abstract class BaseController {
    * use $text or something to allow rendering custom text within layout, and just spit out the
    * appropriate headers based on exceptions as mentioned above)
    */
-  protected $error_status;
+  protected $http_status;
 
   /** Currently just for error text output.  FIXME!!  */
   protected $text;
@@ -49,9 +49,9 @@ abstract class BaseController {
   public function render() {
     $this->process();
 
-    if ($this->error_status) {
+    if ($this->http_status) {
       // TODO: Make this render within the layout
-      header($this->error_status);
+      header($this->http_status);
       print $this->text;
       exit(1);
     }

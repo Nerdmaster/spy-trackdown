@@ -16,7 +16,7 @@ class GamesController extends BaseController{
   public function process() {
     $actions = array("new", "login");
     if (!in_array($this->action, $actions)) {
-      $this->error_status = 'HTTP/1.1 404 Not Found';
+      $this->http_status = 'HTTP/1.1 404 Not Found';
       $this->text = "Invalid action, " . htmlspecialchars($this->action) .
                     ".  Please double-check your URL and try again.";
       return;
