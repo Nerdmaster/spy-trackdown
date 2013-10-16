@@ -26,11 +26,17 @@ class GamesController extends BaseController{
     $this->$fn();
   }
 
+  /**
+   * Response for GET /games/new - renders the form to start a game
+   */
   private function render_new() {
     $this->template = "games/new_form.html";
     $this->variables = array("title" => "New Game");
   }
 
+  /**
+   * Response for GET /games/login - renders the form to resume a game
+   */
   private function render_login() {
     $this->template = "games/login_form.html";
     $this->variables = array("title" => "Resume Game");
