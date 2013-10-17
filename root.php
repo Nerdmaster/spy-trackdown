@@ -30,7 +30,5 @@ if ($DB->connect_error) {
   die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
 }
 
-Twig_Autoloader::register();
-
 // Set up map data
 Map::initialize();
