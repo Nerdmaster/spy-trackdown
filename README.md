@@ -23,6 +23,11 @@ Installing
 * Set up a cron job to automatically purge files in data/games that aren't
   modified for a few weeks (in case of games that start but are forgotten
   or otherwise abandoned).
+* Create or copy name generation files in data/name-gen.  Filenames must
+  be numeric, and contents must be one or more strings delimited by a newline.
+  The easiest way to set this up if you aren't expecting multiple games to
+  run at once is to copy `data/name-gen/1.example` to `data/name-gen/1`, and
+  follow that pattern for each of the other example files.
 
 Why?
 -----

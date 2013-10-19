@@ -9,3 +9,6 @@
 
 # Ignore generated games
 /data/games/*
+
+# Ignore name generation files
+/data/games/*
