@@ -68,10 +68,9 @@ class GamesController extends BaseController{
       return;
     }
 
-    print_r($game);
+    // todo: Save data somewhere
 
-    // todo: save to db
-
-    // todo: redirect
+    // Redirect user to action handler
+    $this->redirect_to("/games/start");
   }
 }

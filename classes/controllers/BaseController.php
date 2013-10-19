@@ -77,6 +77,12 @@ abstract class BaseController {
     print $template->render(array_merge($defaults, $this->variables));
   }
 
+  public function redirect_to($path) {
+    $full_url = WEBROOT . $path;
+    $this->text = "Redirecting you to $full_url";
+    $this->http_status = "Location: $full_url";
+  }
+
   /**
    * This is where the controller needs to set up its template or errors
    */
