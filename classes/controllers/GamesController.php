@@ -2,6 +2,7 @@
 
 require_once("BaseController.php");
 require_class("Game");
+require_class("dao/Game");
 require_class("Utils");
 
 class GamesController extends BaseController{
@@ -69,13 +70,8 @@ class GamesController extends BaseController{
     }
 
     // Save data
-    //
-    // TODO: Yes, this is horrible - this is just for proof-of-concept work.  Will go to a real
-    // DB (or at least something like redis) when the game is mostly working.
-    $id = sha1(SERVER_SECRET . $game->name());
-    $fh = fopen(ROOT . "/data/games/$id", "w");
-    fwrite($fh, serialize($game));
-    fclose($fh);
+    $dao_game = new Data\Game();
+    $dao_game->save_game($game);
 
     // Redirect user to start-of-game page
     $this->redirect_to("/games/start/$id");
