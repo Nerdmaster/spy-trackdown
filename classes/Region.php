@@ -22,4 +22,15 @@ class Region {
     );
     return $jump_links[$region];
   }
+
+  public static function regions() {
+    return array(
+      Region::NORTH_AMERICA,
+      Region::SOUTH_AMERICA,
+      Region::EUROPE,
+      Region::AFRICA,
+      Region::ASIA,
+      Region::AUSTRALIA
+    );
+  }
 }

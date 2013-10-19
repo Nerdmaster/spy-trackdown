@@ -138,6 +138,20 @@ class Map {
     return $result;
   }
 
+  /**
+   * Returns an array of zones, optionally limited to a single region
+   */
+  public static function zones($region = NULL) {
+    $zones = array();
+    foreach (self::$zones as $map_zone) {
+      if ($region === NULL || $region === $map_zone->region()) {
+        $zones[] = $map_zone;
+      }
+    }
+
+    return $zones;
+  }
+
   // Verification rules:
   // * Every space must have 2+ links
   // * Spaces with an external link must have at least one local link
