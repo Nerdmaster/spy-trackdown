@@ -1,5 +1,6 @@
 <?php
 
+require_class("Map");
 require_class("Player");
 
 /**
@@ -18,8 +19,17 @@ class Game {
   /** What is the current action number? (1 or 2) */
   private $current_action;
 
+  /** Whose turn is it (index into players array)? */
+  private $current_player;
+
   /** Game status flags */
   private $started, $completed;
+
+  /** Array of region => covert op map zone */
+  private $covert_ops_locations;
+
+  /** Map zone for mastermind */
+  private $mastermind_location;
 
   public function __construct() {
     $this->name = "Generic Game";
@@ -62,10 +72,30 @@ class Game {
 
     $this->started = TRUE;
 
-    // TODO: Set up mastermind location
+    // Set up players, mastermind, and covert ops locations
+    $all_zones = Map::zones();
+    $this->covert_ops_locations = array();
+    $this->mastermind_location = $all_zones[array_rand($all_zones)]->code();
 
-    // TODO: Set up covert agent location
+    foreach (Region::regions() as $region) {
+      $zones = Map::zones($region);
+      // TODO: Remove this hack once map data is fully populated and verified
+      if (count($zones) == 0) {
+        continue;
+      }
+      $code = $zones[array_rand($zones)]->code();
+      $this->covert_ops_locations[$region] = $code;
+    }
 
-    // TODO: Set up player start location - cannot be the same as any covert agents' locations
+    // Set up player location
+    $player_location = $all_zones[array_rand($all_zones)]->code();
+    foreach ($this->players as $player) {
+      $player->location($player_location);
+    }
+
+    // Set up turn
+    $this->current_turn = 1;
+    $this->current_action = 1;
+    $this->current_player = 0;
   }
 }
