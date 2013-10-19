@@ -68,9 +68,16 @@ class GamesController extends BaseController{
       return;
     }
 
-    // todo: Save data somewhere
+    // Save data
+    //
+    // TODO: Yes, this is horrible - this is just for proof-of-concept work.  Will go to a real
+    // DB (or at least something like redis) when the game is mostly working.
+    $id = sha1(SERVER_SECRET . $game->name());
+    $fh = fopen(ROOT . "/data/games/$id", "w");
+    fwrite($fh, serialize($game));
+    fclose($fh);
 
-    // Redirect user to action handler
-    $this->redirect_to("/games/start");
+    // Redirect user to start-of-game page
+    $this->redirect_to("/games/start/$id");
   }
 }

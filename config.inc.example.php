@@ -15,3 +15,10 @@ const WEBROOT = "http://www.yoursite.com/spy-trackdown";
 
 // Configurable general stuff
 const APPNAME = "Spy Trackdown Phone";
+
+// Used for random hashing of stuff to make guessing data harder
+// An acceptable (though not perfectly secure) way to generate this is via the following
+// command:
+//
+// echo `date` | mkpasswd --method=sha-512 -s | sed -e "s/^.*\\$//"
+const SECRET_KEY = "Change me!";
