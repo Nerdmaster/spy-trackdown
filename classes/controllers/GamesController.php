@@ -74,6 +74,6 @@ class GamesController extends BaseController{
     $dao_game->save_game($game);
 
     // Redirect user to start-of-game page
-    $this->redirect_to("/games/start/$id");
+    $this->redirect_to("/games/intro/$id");
   }
 }
