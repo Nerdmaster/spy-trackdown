@@ -6,13 +6,13 @@
 class Utils {
   /** Generates a name for a game using text files in data/ */
   public static function generate_name() {
-    $arr = file(ROOT . "/data/1");
+    $arr = file(ROOT . "/data/name-gen/1");
     $adjective = rtrim($arr[array_rand($arr)]);
 
-    $arr = file(ROOT . "/data/2");
+    $arr = file(ROOT . "/data/name-gen/2");
     $flavor = rtrim($arr[array_rand($arr)]);
 
-    $arr = file(ROOT . "/data/3");
+    $arr = file(ROOT . "/data/name-gen/3");
     $animal = rtrim($arr[array_rand($arr)]);
 
     return sprintf("%s %s %s", $adjective, $flavor, $animal);
