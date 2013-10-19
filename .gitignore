@@ -11,4 +11,4 @@
 /data/games/*
 
 # Ignore name generation files
-/data/games/*
+/data/name-gen/*
