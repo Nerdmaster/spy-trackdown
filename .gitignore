@@ -6,3 +6,6 @@
 
 # Ignore template cache
 /.template-cache
+
+# Ignore generated games
+/data/games/*
