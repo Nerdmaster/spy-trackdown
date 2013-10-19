@@ -57,7 +57,7 @@ class GamesController extends BaseController{
       $game->add_player($player);
     }
 
-    $game->set_name(Utils::generate_name());
+    $game->name(Utils::generate_name());
 
     try {
       $game->start();

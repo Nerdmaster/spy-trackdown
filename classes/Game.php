@@ -52,10 +52,14 @@ class Game {
   }
 
   /**
-   * Sets a name for identification of this game if multiple games are being played in one app
+   * Gets and optionally sets a name for identification of this game if multiple games are being
+   * played in one installation instance.
    */
-  public function set_name($name) {
-    $this->name = $name;
+  public function name($name = NULL) {
+    if ($name) {
+      $this->name = $name;
+    }
+    return $this->name;
   }
 
   /**
