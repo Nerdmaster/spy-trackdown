@@ -19,6 +19,17 @@ function debug($message) {
   }
 }
 
+/**
+ * Notice-free value getter for array data.  Returns $default if key isn't in the array.
+ */
+function aval($array, $key, $default = NULL) {
+  if (array_key_exists($key, $array)) {
+    return $array[$key];
+  }
+
+  return $default;
+}
+
 // Include config as all parts of the app need it
 require_once("config.inc.php");
 require_once(ROOT . '/vendor/autoload.php');
