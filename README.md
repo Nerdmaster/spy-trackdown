@@ -13,15 +13,16 @@ Installing
   the settings for your database, at least by changing the password.
 * Run `php scripts/create_database.php [host] [root username] [root password]`
   to create the database and user based on the values in config.inc.php.
-* **TODO: Add db table creation info**
-* **TODO: any other scripts to run?**
 * Point Apache to the `public` directory.  It's best not to allow Apache
   to serve the root of the application, though it does need to have read
   access everywhere in the app.
 * Give Apache rights to read all files in the app, and to write to the
-  top-level `template-cache` directory.
+  top-level `template-cache` and `data/games` directories.
 * Set up directories and URL paths in `config.inc.php` to match your web
   server.
+* Set up a cron job to automatically purge files in data/games that aren't
+  modified for a few weeks (in case of games that start but are forgotten
+  or otherwise abandoned).
 
 Why?
 -----
