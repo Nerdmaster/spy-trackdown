@@ -1,5 +1,7 @@
 <?php
 
+require_class("Player");
+
 /**
  * Holds all top-level data necessary to run a game.  Violates SRP like mad for simplicity
  */
@@ -36,8 +38,7 @@ class Game {
       throw new Exception("Cannot add players to a game already in progress!");
     }
 
-    // TODO: Use player objects of some sort here, not just names!
-    $this->players[] = $name;
+    $this->players[] = new Player($name);
   }
 
   /**
