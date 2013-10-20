@@ -2,7 +2,7 @@
 
 require_once("BaseController.php");
 require_class("Game");
-require_class("dao/Game");
+require_class("data/Game");
 require_class("Utils");
 
 class GamesController extends BaseController{
@@ -70,12 +70,12 @@ class GamesController extends BaseController{
     }
 
     // Save data
-    $dao_game = new Data\Game();
-    $dao_game->game($game);
-    $dao_game->save();
+    $game_store = new Data\Game();
+    $game_store->game($game);
+    $game_store->save();
 
     // Redirect user to start-of-game page
-    $this->redirect_to("/games/intro/{$dao_game->id()}");
+    $this->redirect_to("/games/intro/{$game_store->id()}");
   }
 
   /**
@@ -84,9 +84,9 @@ class GamesController extends BaseController{
    */
   private function render_intro() {
     $id = array_pop($this->path_array);
-    $dao_game = new Data\Game();
-    $dao_game->id($id);
-    $game = $dao_game->load();
+    $game_store = new Data\Game();
+    $game_store->id($id);
+    $game = $game_store->load();
     if (!$game) {
       $this->http_status = "HTTP/1.1 404 Not Found";
       $this->text = "Unable to find the specified game.";
