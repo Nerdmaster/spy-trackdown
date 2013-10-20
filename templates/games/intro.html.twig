@@ -1,0 +1,36 @@
+{% extends "layout.html.twig" %}
+
+{% block header %}
+  {{game_name}}
+{% endblock %}
+
+{% block content %}
+  <p>You are about to start, but before you begin, there are a few things to keep in mind:</p>
+
+  <ul>
+    <li>
+      If this game gets interrupted, you'll need to remember its name ("{{game_name}}")  This
+      name will be used on the login form, so it may be a good idea to take a screenshot or
+      write the name down!
+    </li>
+
+    <li>
+      This game is meant to be played from only ONE DEVICE AT A TIME!  If you try to have
+      everybody playing from their own device, it won't work!  Such functionality may be added
+      in the future, but for now consider the device just like the original phone gadget -
+      there is only one, and it has to be passed around as necessary.
+    </li>
+
+    <li>
+      This is a work in progress, and while I aim to get it as close to the original game as I
+      can, mistakes will happen.  If any functionality appears to be wrong, please
+      <a href="https://github.com/Nerdmaster/spy-trackdown/issues">submit an issue on the github project</a>.
+    </li>
+  </ul>
+
+  <div class="text-center">
+    <a href="{{WEBROOT}}/play" class="btn btn-primary btn-lg">
+      <span class="glyphicon glyphicon-play"></span>
+      Begin Game</a>
+  </div>
+{% endblock %}

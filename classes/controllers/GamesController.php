@@ -17,7 +17,7 @@ class GamesController extends BaseController{
   }
 
   public function process() {
-    $actions = array("new", "login", "start_game");
+    $actions = array("new", "login", "start_game", "intro");
     if (!in_array($this->action, $actions)) {
       $this->http_status = 'HTTP/1.1 404 Not Found';
       $this->text = "Invalid action, " . htmlspecialchars($this->action) .
@@ -75,6 +75,25 @@ class GamesController extends BaseController{
     $dao_game->save();
 
     // Redirect user to start-of-game page
-    $this->redirect_to("/games/intro/$id");
+    $this->redirect_to("/games/intro/{$dao_game->id()}");
+  }
+
+  /**
+   * Response for GET /games/intro/:id - game is created and we just need to give players the name
+   * and any basic instructions they need
+   */
+  private function render_intro() {
+    $id = array_pop($this->path_array);
+    $dao_game = new Data\Game();
+    $dao_game->id($id);
+    $game = $dao_game->load();
+    if (!$game) {
+      $this->http_status = "HTTP/1.1 404 Not Found";
+      $this->text = "Unable to find the specified game.";
+      return;
+    }
+
+    $this->template = "games/intro";
+    $this->variables = array("title" => "Introduction", "game_name" => $game->name());
   }
 }
