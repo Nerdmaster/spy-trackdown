@@ -94,6 +94,6 @@ class GamesController extends BaseController{
     }
 
     $this->template = "games/intro";
-    $this->variables = array("title" => "Introduction", "game_name" => $game->name());
+    $this->variables = array("title" => "Introduction", "game_name" => $game->name(), "game_id" => $id);
   }
 }

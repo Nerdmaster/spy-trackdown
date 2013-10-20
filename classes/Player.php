@@ -18,4 +18,8 @@ class Player {
 
     return $this->location;
   }
+
+  public function name() {
+    return $this->name;
+  }
 }

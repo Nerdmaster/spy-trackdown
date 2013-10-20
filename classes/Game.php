@@ -63,6 +63,13 @@ class Game {
   }
 
   /**
+   * Returns current player object (not the index in $this->current_player)
+   */
+  public function current_player() {
+    return $this->players[$this->current_player];
+  }
+
+  /**
    * Starts a new game, initializing random locations for mastermind, players, and covert agents
    */
   public function start() {
