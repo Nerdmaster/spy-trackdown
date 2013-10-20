@@ -30,10 +30,16 @@ class Game {
   }
 
   public function save() {
+    if (!$this->game) {
+      throw new Exception("Unable to save - no game object found");
+    }
     file_put_contents($this->file_path(), serialize($this->game));
   }
 
   public function load() {
+    if (!$this->id) {
+      throw new Exception("Unable to load - no id found");
+    }
     $this->game = unserialize(file_get_contents($this->file_path()));
     return $this->game;
   }
