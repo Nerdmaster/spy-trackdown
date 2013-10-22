@@ -153,7 +153,8 @@ class Map {
   }
 
   // Verification rules:
-  // * Every space must have 2+ links
+  // * Every space must have 2+ links - EXCEPT Asia 9!
+  // * All spaces must be linked to each other (traversing the map should find all spaces)
   // * Spaces with an external link must have at least one local link
   // * Every continental jump must be yellow
   // * Every continent must jump to at least two other continents
