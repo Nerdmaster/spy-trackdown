@@ -42,7 +42,27 @@ class PlayController extends BaseController{
   private function render_show() {
     // Read game turn state
     $this->template = "play/phone";
-    $player = $this->game_store->game()->current_player();
-    $this->variables = array("title" => "", "player_name" => $player->name());
+    $game = $this->game_store->game();
+    $player = $game->current_player();
+    $action = $game->current_action();
+    switch($action) {
+      case 1:
+        $aord = "First";
+        break;
+      case 2:
+        $aord = "Second";
+        break;
+      default:
+        $aord = "UNKNOWN!";
+    }
+
+    // Set all the fun variables
+    $this->variables = array(
+      "title" => "",
+      "player_name" => $player->name(),
+      "zone" => Map::get_zone_by_code($player->location()),
+      "turn" => $game->current_turn(),
+      "action_ordinal" => $aord,
+    );
   }
 }

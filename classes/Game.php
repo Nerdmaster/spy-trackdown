@@ -70,6 +70,20 @@ class Game {
   }
 
   /**
+   * Returns current turn number
+   */
+  public function current_turn() {
+    return $this->current_turn;
+  }
+
+  /**
+   * Returns current action
+   */
+  public function current_action() {
+    return $this->current_action;
+  }
+
+  /**
    * Starts a new game, initializing random locations for mastermind, players, and covert agents
    */
   public function start() {

@@ -5,5 +5,44 @@
 {% endblock %}
 
 {% block content %}
-Dummy content is better than lorem ipsum, but I'm too lazy for either.
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      {{player_name}}: Turn #{{turn}}, {{action_ordinal}} action
+    </div>
+    <div class="panel-body player-location">
+      {{zone.region}} - {{zone.location_number}} ({{zone.city_name}})
+      TODO: Turn this into a list of options below the info - use label for code ("X O O X") and text explaining it
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div id="phone" class="well">
+        <div class="panel panel-default">
+          <div id="phone-display" class="panel-body text-center" data-command="">
+            _
+          </div>
+        </div>
+
+        <div class="phone-button command">
+          <button data-value="o" class="btn btn-default">O</button>
+        </div>
+
+        <div class="phone-button command">
+          <button data-value="x" class="btn btn-default">X</button>
+        </div>
+
+        <div class="phone-button reset">
+          <button class="btn btn-danger">Reset</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-8">
+      <div class="recent-history">
+        In here we'll show public history with a button to pop up private history
+      </div>
+    </div>
+  </div>
+
 {% endblock %}
