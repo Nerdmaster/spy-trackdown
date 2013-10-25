@@ -131,7 +131,7 @@ class Map {
       foreach(array(Travel::RED, Travel::BLUE, Travel::GREEN, Travel::YELLOW) as $travel) {
         $linked = $map_zone->link($travel);
         $code = $linked ? $linked->code() : "N/A";
-        $result .= sprintf("  %-20s %5s\n", $travel, $code);
+        $result .= sprintf("  %-20s %5s\n", Travel::$text[$travel], $code);
       }
     }
 
