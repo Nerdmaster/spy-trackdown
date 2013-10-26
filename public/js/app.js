@@ -43,7 +43,8 @@ function showConfirm(actionData) {
   }
 
   // TODO: Make the "confirm" action post to server
-  $("#confirm-command-label").html(actionData.text);
+  $("#confirm-command-label").html("Are you sure?")
+  $("#confirm-command .modal-body").html("Confirm: " + actionData.text);
   $("#confirm-command").modal();
 }
 
