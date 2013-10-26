@@ -63,6 +63,7 @@ class PlayController extends BaseController{
       "zone" => Map::get_zone_by_code($player->location()),
       "turn" => $game->current_turn(),
       "action_ordinal" => $aord,
+      "game_id" => $this->game_store->id(),
     );
   }
 }

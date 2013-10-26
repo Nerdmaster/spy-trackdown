@@ -56,8 +56,11 @@
         </div>
         <div class="modal-body"></div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-primary">Confirm Action</button>
+          <form action="{{WEBROOT}}/play/confirm_action/{{game_id}}" method="post">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <input type="hidden" id="confirm-command-action" name="action" value="" />
+            <input type="submit" value="Confirm" class="btn btn-primary" />
+          </form>
         </div>
       </div>
     </div>
