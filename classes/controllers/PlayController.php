@@ -58,7 +58,7 @@ class PlayController extends BaseController{
 
     // Set all the fun variables
     $this->variables = array(
-      "title" => "",
+      "title" => $player->name() . "'s turn",
       "player_name" => $player->name(),
       "zone" => Map::get_zone_by_code($player->location()),
       "turn" => $game->current_turn(),
