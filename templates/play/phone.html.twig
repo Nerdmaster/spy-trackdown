@@ -7,11 +7,10 @@
 {% block content %}
   <div class="panel panel-primary">
     <div class="panel-heading">
-      {{player_name}}: Turn #{{turn}}, {{action_ordinal}} action
+      Turn #{{turn}}, {{action_ordinal}} action
     </div>
     <div class="panel-body player-location">
       {{zone.region}} - {{zone.location_number}} ({{zone.city_name}})
-      TODO: Turn this into a list of options below the info - use label for code ("X O O X") and text explaining it
     </div>
   </div>
 
