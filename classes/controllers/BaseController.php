@@ -65,6 +65,10 @@ abstract class BaseController {
   public function render_template() {
     Twig_Autoloader::register();
 
+    if (!$this->template) {
+      return;
+    }
+
     $template = $this->twig->loadTemplate($this->template . ".html.twig");
 
     // Default variables - passed-in $variables can override these
