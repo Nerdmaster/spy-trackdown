@@ -3,11 +3,11 @@
 // doubly hard-coded.
 var commandList = {
   // Movement (or lack thereof)
-  "OOOO": {"text": "Skip action", "action": "skip_action"},
-  "XOXO": {"text": "Travel by Sports Car (red)", "action": "travel0"},
-  "XOOO": {"text": "Travel by Helicopter (blue)", "action": "travel1"},
-  "OXOX": {"text": "Travel by Motorcycle (green)", "action": "travel2"},
-  "OXXX": {"text": "Travel by Jet (yellow)", "action": "travel3"},
+  "OOOO": {"text": "Skip action",                       "path": "action_skip"},
+  "XOXO": {"text": "Travel by Sports Car (red)",        "path": "action_travel", "action": "0"},
+  "XOOO": {"text": "Travel by Helicopter (blue)",       "path": "action_travel", "action": "1"},
+  "OXOX": {"text": "Travel by Motorcycle (green)",      "path": "action_travel", "action": "2"},
+  "OXXX": {"text": "Travel by Jet (yellow)",            "path": "action_travel", "action": "3"},
 
   // TODO: Covert actions
 };
@@ -41,6 +41,10 @@ function showConfirm(actionData) {
     alert("Invalid command entered.");
     return;
   }
+
+  var formAction = $("#confirm-command form").attr("action");
+  var validURL = formAction.replace("%PATH%", actionData.path);
+  $("#confirm-command form").attr("action", validURL);
 
   $("#confirm-command-label").html("Are you sure?")
   $("#confirm-command .modal-body").html("Confirm: " + actionData.text);
