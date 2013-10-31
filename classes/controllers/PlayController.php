@@ -28,9 +28,38 @@ class PlayController extends BaseController{
       return;
     }
 
-    $this->game_store->load();
+    $this->extract_data_from_store();
+
     $fn = sprintf("render_%s", $this->action);
     $this->$fn();
+  }
+
+  /**
+   * Loads the game_store data and extracts data into variables to simplify common functionality
+   */
+  private function extract_data_from_store() {
+    $this->game_store->load();
+    $this->game = $this->game_store->game();
+    $this->player = $this->game->current_player();
+    $this->action_num = $this->game->current_action();
+
+    $this->variable("title", $this->player->name() . "'s turn");
+    $this->variable("player_name", $this->player->name());
+    $this->variable("zone", Map::get_zone_by_code($this->player->location()));
+    $this->variable("turn", $this->game->current_turn());
+    $this->variable("game_id", $this->game_store->id());
+    $this->variable("action_ordinal", $this->get_action_ordinal($this->action_num));
+  }
+
+  private function get_action_ordinal($num) {
+    switch($num) {
+      case 1:
+        return "First";
+      case 2:
+        return "Second";
+      default:
+        return "UNKNOWN!";
+    }
   }
 
   /**
@@ -40,28 +69,6 @@ class PlayController extends BaseController{
    * message (next player's turn is starting).
    */
   private function render_show() {
-    // Read game turn state
     $this->template = "play/phone";
-    $game = $this->game_store->game();
-    $player = $game->current_player();
-    $action = $game->current_action();
-    switch($action) {
-      case 1:
-        $aord = "First";
-        break;
-      case 2:
-        $aord = "Second";
-        break;
-      default:
-        $aord = "UNKNOWN!";
-    }
-
-    // Set all the fun variables
-    $this->variable("title", $player->name() . "'s turn");
-    $this->variable("player_name", $player->name());
-    $this->variable("zone", Map::get_zone_by_code($player->location()));
-    $this->variable("turn", $game->current_turn());
-    $this->variable("action_ordinal", $aord);
-    $this->variable("game_id", $this->game_store->id());
   }
 }
