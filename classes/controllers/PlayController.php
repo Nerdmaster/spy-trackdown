@@ -57,13 +57,11 @@ class PlayController extends BaseController{
     }
 
     // Set all the fun variables
-    $this->variables = array(
-      "title" => $player->name() . "'s turn",
-      "player_name" => $player->name(),
-      "zone" => Map::get_zone_by_code($player->location()),
-      "turn" => $game->current_turn(),
-      "action_ordinal" => $aord,
-      "game_id" => $this->game_store->id(),
-    );
+    $this->variable("title", $player->name() . "'s turn");
+    $this->variable("player_name", $player->name());
+    $this->variable("zone", Map::get_zone_by_code($player->location()));
+    $this->variable("turn", $game->current_turn());
+    $this->variable("action_ordinal", $aord);
+    $this->variable("game_id", $this->game_store->id());
   }
 }

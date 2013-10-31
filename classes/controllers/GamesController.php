@@ -34,7 +34,7 @@ class GamesController extends BaseController{
    */
   private function render_new() {
     $this->template = "games/new_form";
-    $this->variables = array("title" => "New Game");
+    $this->variable("title", "New Game");
   }
 
   /**
@@ -42,7 +42,7 @@ class GamesController extends BaseController{
    */
   private function render_login() {
     $this->template = "games/login_form";
-    $this->variables = array("title" => "Resume Game");
+    $this->variable("title", "Resume Game");
   }
 
   /**
@@ -65,7 +65,8 @@ class GamesController extends BaseController{
     }
     catch (Exception $e) {
       $this->template = "games/new_form";
-      $this->variables = array("title" => "New Game", "errors" => array($e->getMessage()));
+      $this->variable("title", "New Game");
+      $this->variable("errors", array($e->getMessage()));
       return;
     }
 
@@ -94,6 +95,8 @@ class GamesController extends BaseController{
     }
 
     $this->template = "games/intro";
-    $this->variables = array("title" => "Introduction", "game_name" => $game->name(), "game_id" => $id);
+    $this->variable("title", "Introduction");
+    $this->variable("game_name", $game->name());
+    $this->variable("game_id", $id);
   }
 }

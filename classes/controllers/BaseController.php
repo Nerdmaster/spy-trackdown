@@ -13,8 +13,12 @@ abstract class BaseController {
   /** Template to render - not set on errors */
   protected $template;
 
-  /** Local variables for a controller to set as necessary for templates */
-  protected $variables;
+  /**
+   * Local variables - controller sets these via $this->variable("name", "value").  Defaults are
+   * merged in (not overwriting controller-set variables) and the resulting data is passed on to
+   * whatever twig template is rendered.
+   */
+  private $variables;
 
   /**
    * Error status to print out, such as "HTTP/1.1 404 Not Found".  Setting this causes template
@@ -41,6 +45,7 @@ abstract class BaseController {
     }
     $this->twig = new Twig_Environment($this->loader, $env_config);
     $this->path_array = $path_array;
+    $this->variables = array();
   }
 
   /**
@@ -71,7 +76,7 @@ abstract class BaseController {
 
     $template = $this->twig->loadTemplate($this->template . ".html.twig");
 
-    // Default variables - passed-in $variables can override these
+    // Default variables - manually-set variables can override these
     $defaults = array(
       "WEBROOT" => WEBROOT,
       "APPNAME" => APPNAME,
@@ -85,6 +90,13 @@ abstract class BaseController {
     $full_url = WEBROOT . $path;
     $this->text = "Redirecting you to $full_url";
     $this->http_status = "Location: $full_url";
+  }
+
+  /**
+   * Sets a variable for the template to use
+   */
+  public function variable($name, $value) {
+    $this->variables[$name] = $value;
   }
 
   /**
