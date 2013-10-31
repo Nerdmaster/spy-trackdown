@@ -3,6 +3,7 @@
 require_once("BaseController.php");
 require_class("Game");
 require_class("data/Game");
+require_class("displays/MapZone");
 
 class PlayController extends BaseController{
   protected $action;
@@ -42,10 +43,11 @@ class PlayController extends BaseController{
     $this->game = $this->game_store->game();
     $this->player = $this->game->current_player();
     $this->action_num = $this->game->current_action();
+    $this->zone = Map::get_zone_by_code($this->player->location());
 
     $this->variable("title", $this->player->name() . "'s turn");
     $this->variable("player_name", $this->player->name());
-    $this->variable("zone", Map::get_zone_by_code($this->player->location()));
+    $this->variable("zone", new MapZoneDisplay($this->zone));
     $this->variable("turn", $this->game->current_turn());
     $this->variable("game_id", $this->game_store->id());
     $this->variable("action_ordinal", $this->get_action_ordinal($this->action_num));
