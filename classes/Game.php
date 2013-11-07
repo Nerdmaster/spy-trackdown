@@ -22,8 +22,16 @@ class Game {
   /** Whose turn is it (index into players array)? */
   private $current_player;
 
-  /** Game status flags */
-  private $started, $completed;
+  /**
+   * Game status - are we waiting on a player to take an action?  Waiting to give a secret
+   * message?  Ready for the next player?
+   */
+  private $status;
+  const STATUS_PRE_GAME = 0;
+  const STATUS_READY_FOR_PLAYER = 1;
+  const STATUS_AWAITING_ACTION = 2;
+  const STATUS_AWAITING_SECRET_MESSAGE = 3;
+  const STATUS_GAME_OVER = 4;
 
   /** Array of region => covert op map zone */
   private $covert_ops_locations;
@@ -34,8 +42,7 @@ class Game {
   public function __construct() {
     $this->name = "Generic Game";
     $this->players = array();
-    $this->started = FALSE;
-    $this->completed = FALSE;
+    $this->status = self::STATUS_PRE_GAME;
     $this->current_turn = 0;
     $this->current_action = 0;
   }
@@ -44,8 +51,8 @@ class Game {
    * Adds the given player to the game - only for games that haven't started yet
    */
   public function add_player($name) {
-    if ($this->started) {
-      throw new Exception("Cannot add players to a game already in progress!");
+    if ($this->status != self::STATUS_PRE_GAME) {
+      throw new Exception("Players can only be added before the game begins!");
     }
 
     $this->players[] = new Player($name);
@@ -91,11 +98,9 @@ class Game {
       throw new Exception("Cannot start a game without players!");
     }
 
-    if ($this->started) {
-      throw new Exception("Cannot start a game already in progress!");
+    if ($this->status != self::STATUS_PRE_GAME) {
+      throw new Exception("Cannot start a game that's already been started!");
     }
-
-    $this->started = TRUE;
 
     // Set up players, mastermind, and covert ops locations
     $all_zones = Map::zones();
@@ -122,5 +127,6 @@ class Game {
     $this->current_turn = 1;
     $this->current_action = 1;
     $this->current_player = 0;
+    $this->status = self::STATUS_READY_FOR_PLAYER;
   }
 }
