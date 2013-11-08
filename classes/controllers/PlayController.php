@@ -71,6 +71,27 @@ class PlayController extends BaseController{
    * message (next player's turn is starting).
    */
   private function render_show() {
-    $this->template = "play/phone";
+    switch($this->game->status()) {
+      // TODO: Implement view here!  Just a simple page that says whose turn it
+      // is and to put the phone where everybody can see it
+      case Game::STATUS_READY_FOR_PLAYER:
+        throw new Exception("Not implemented!");
+        break;
+
+      case Game::STATUS_AWAITING_ACTION:
+        $this->template = "play/phone";
+        break;
+
+      case Game::STATUS_AWAITING_SECRET_MESSAGE:
+        throw new Exception("Not implemented!");
+        break;
+
+      case Game::STATUS_GAME_OVER:
+        throw new Exception("Not implemented!");
+        break;
+
+      default:
+        throw new Exception("Unknown game status when rendering: " . var_dump($this->game->status()));
+    }
   }
 }
