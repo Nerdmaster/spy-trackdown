@@ -97,6 +97,13 @@ class Game {
   }
 
   /**
+   * Returns current game status
+   */
+  public function status() {
+    return $this->status;
+  }
+
+  /**
    * Starts a new game, initializing random locations for mastermind, players, and covert agents
    */
   public function start() {
