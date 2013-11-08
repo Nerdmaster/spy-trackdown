@@ -48,13 +48,19 @@ class Game {
   }
 
   /**
+   * Throws WorkflowStatusError when the current status doesn't match the allowed status
+   */
+  private function validate_status($allowed_status, $message = "Invalid status") {
+    if ($this->status != $allowed_status) {
+      throw new WorkflowStatusError("$message (Status: {$this->status}");
+    }
+  }
+
+  /**
    * Adds the given player to the game - only for games that haven't started yet
    */
   public function add_player($name) {
-    if ($this->status != self::STATUS_PRE_GAME) {
-      throw new Exception("Players can only be added before the game begins!");
-    }
-
+    validate_status(self::STATUS_PRE_GAME, "Players can only be added before the game begins!");
     $this->players[] = new Player($name);
   }
 
@@ -94,12 +100,10 @@ class Game {
    * Starts a new game, initializing random locations for mastermind, players, and covert agents
    */
   public function start() {
+    validate_status(self::STATUS_PRE_GAME, "Cannot start a game that's already been started!");
+
     if (count($this->players) == 0) {
       throw new Exception("Cannot start a game without players!");
-    }
-
-    if ($this->status != self::STATUS_PRE_GAME) {
-      throw new Exception("Cannot start a game that's already been started!");
     }
 
     // Set up players, mastermind, and covert ops locations
