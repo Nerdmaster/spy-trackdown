@@ -60,7 +60,7 @@ class Game {
    * Adds the given player to the game - only for games that haven't started yet
    */
   public function add_player($name) {
-    validate_status(self::STATUS_PRE_GAME, "Players can only be added before the game begins!");
+    $this->validate_status(self::STATUS_PRE_GAME, "Players can only be added before the game begins!");
     $this->players[] = new Player($name);
   }
 
@@ -107,7 +107,7 @@ class Game {
    * Starts a new game, initializing random locations for mastermind, players, and covert agents
    */
   public function start() {
-    validate_status(self::STATUS_PRE_GAME, "Cannot start a game that's already been started!");
+    $this->validate_status(self::STATUS_PRE_GAME, "Cannot start a game that's already been started!");
 
     if (count($this->players) == 0) {
       throw new Exception("Cannot start a game without players!");
