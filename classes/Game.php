@@ -2,6 +2,7 @@
 
 require_class("Map");
 require_class("Player");
+require_once(ROOT . '/classes/errors.php');
 
 /**
  * Holds all top-level data necessary to run a game.  Violates SRP like mad for simplicity
@@ -147,5 +148,43 @@ class Game {
   public function start_turn() {
     $this->validate_status(self::STATUS_READY_FOR_PLAYER, "Cannot start turn from this status");
     $this->status = self::STATUS_AWAITING_ACTION;
+  }
+
+  /**
+   * Moves a player by the given travel method.
+   *
+   * TODO: Split this up into more "do one thing" functions :(
+   */
+  public function player_travel($method) {
+    $this->validate_status(self::STATUS_AWAITING_ACTION, "Cannot travel from this status");
+
+    $player = $this->current_player();
+    $zone = Map::get_zone_by_code($player->location());
+
+    $travel_text = Travel::$text[$method];
+    if (!$travel_text) {
+      throw new InvalidTravelError("Invalid travel code used, cannot attempt travel");
+    }
+
+    $new_zone = $zone->link($method);
+    if (!$new_zone) {
+      throw new InvalidTravelError("Cannot travel from here via $travel_text");
+    }
+
+    // All is well - move the player and end this action
+    $player->location($new_zone->code());
+    $this->end_action();
+  }
+
+  /**
+   * Ends a player's action.  If it's their last action, sets internal status to indicate it's
+   * time for their secret message.
+   */
+  private function end_action() {
+    $this->current_action++;
+
+    if ($this->current_action > 2) {
+      $this->status = self::STATUS_AWAITING_SECRET_MESSAGE;
+    }
   }
 }

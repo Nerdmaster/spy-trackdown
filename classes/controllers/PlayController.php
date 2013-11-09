@@ -4,6 +4,7 @@ require_once("BaseController.php");
 require_class("Game");
 require_class("data/Game");
 require_class("displays/MapZone");
+require_class("errors");
 
 class PlayController extends BaseController{
   protected $action;
@@ -21,7 +22,7 @@ class PlayController extends BaseController{
   }
 
   public function process() {
-    $actions = array("show", "action_start_turn");
+    $actions = array("show", "action_start_turn", "action_travel");
     if (!in_array($this->action, $actions)) {
       $this->http_status = 'HTTP/1.1 404 Not Found';
       $this->text = "Invalid action, " . htmlspecialchars($this->action) .
@@ -98,6 +99,29 @@ class PlayController extends BaseController{
    */
   private function render_action_start_turn() {
     $this->game->start_turn();
+    $this->game_store->save();
+    $this->redirect_to("/play/show/{$this->game_store->id()}");
+  }
+
+  /**
+   * Response for POST /play/action_travel - handler for all submitted travel actions
+   */
+  private function render_action_travel() {
+    try {
+      $this->game->player_travel((integer)$_POST["action"]);
+    }
+    catch (InvalidTravelError $e) {
+      $this->template = "play/phone";
+      $this->variable("errors", array($e->getMessage()));
+      return;
+    }
+    catch (Exception $e) {
+      error_log($e);
+      $this->template = "play/phone";
+      $this->variable("errors", array("Unknown error occurred - please try again"));
+      return;
+    }
+
     $this->game_store->save();
     $this->redirect_to("/play/show/{$this->game_store->id()}");
   }
