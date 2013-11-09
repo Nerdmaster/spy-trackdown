@@ -91,7 +91,7 @@ class PlayController extends BaseController{
         break;
 
       default:
-        throw new Exception("Unknown game status when rendering: " . var_dump($this->game->status()));
+        throw new Exception("Unknown game status when rendering: " . $this->game->status());
     }
   }
 }
