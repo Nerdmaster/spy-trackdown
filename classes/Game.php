@@ -140,4 +140,12 @@ class Game {
     $this->current_player = 0;
     $this->status = self::STATUS_READY_FOR_PLAYER;
   }
+
+  /**
+   * Transition: player has acknowledged start of his turn
+   */
+  public function start_turn() {
+    $this->validate_status(self::STATUS_READY_FOR_PLAYER, "Cannot start turn from this status");
+    $this->status = self::STATUS_AWAITING_ACTION;
+  }
 }

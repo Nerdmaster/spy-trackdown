@@ -21,7 +21,7 @@ class PlayController extends BaseController{
   }
 
   public function process() {
-    $actions = array("show");
+    $actions = array("show", "action_start_turn");
     if (!in_array($this->action, $actions)) {
       $this->http_status = 'HTTP/1.1 404 Not Found';
       $this->text = "Invalid action, " . htmlspecialchars($this->action) .
@@ -72,10 +72,8 @@ class PlayController extends BaseController{
    */
   private function render_show() {
     switch($this->game->status()) {
-      // TODO: Implement view here!  Just a simple page that says whose turn it
-      // is and to put the phone where everybody can see it
       case Game::STATUS_READY_FOR_PLAYER:
-        throw new Exception("Not implemented!");
+        $this->template = "play/ready";
         break;
 
       case Game::STATUS_AWAITING_ACTION:
@@ -93,5 +91,14 @@ class PlayController extends BaseController{
       default:
         throw new Exception("Unknown game status when rendering: " . $this->game->status());
     }
+  }
+
+  /**
+   * Response for POST /play/action_start_turn - simply moves game state forward
+   */
+  private function render_action_start_turn() {
+    $this->game->start_turn();
+    $this->game_store->save();
+    $this->redirect_to("/play/show/{$this->game_store->id()}");
   }
 }
