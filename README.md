@@ -29,6 +29,12 @@ Installing
   run at once is to copy `data/name-gen/1.example` to `data/name-gen/1`, and
   follow that pattern for each of the other example files.
 
+Testing
+-----
+
+Run `vendor/bin/phpunit Tests`.  This is really only necessary if you plan
+to modify code.
+
 Why?
 -----
 
