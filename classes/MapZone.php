@@ -57,6 +57,13 @@ class MapZone {
   }
 
   /**
+   * Returns all valid travel options from this zone
+   */
+  public function links() {
+    return $this->links;
+  }
+
+  /**
    * Sets a two-way travel link.  If either zone already has a link for the given method of
    * travel, throws an UnexpectedValueException.
    *
