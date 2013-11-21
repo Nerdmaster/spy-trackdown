@@ -46,8 +46,7 @@
       $g->player_travel($travel_code);
       $this->assertEquals($p->location(), $zone->code());
 
-      // Action is now 3 - which means we're waiting for the player to get their secret message
-      $this->assertEquals($g->current_action(), 3);
+      // We're now waiting for the player to get their secret message
       $this->assertEquals($g->status(), Game::STATUS_AWAITING_SECRET_MESSAGE);
 
       // TODO: Test secret message, control switching to new player, and eventually control going
