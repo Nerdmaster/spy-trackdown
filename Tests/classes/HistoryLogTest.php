@@ -25,4 +25,15 @@
       $this->h->add(1, $this->player1, "This is a private message", false);
       $this->assertEquals(2, count($this->h->log()));
     }
+
+    public function test_get_secret_message() {
+      // It gets the private message
+      $this->h->add(1, $this->player1, "This is a public message", true);
+      $this->h->add(1, $this->player1, "This is a private message", false);
+      $this->assertEquals(array("This is a private message"), $this->h->get_secret_message($this->player1, 1));
+
+      // TODO: It doesn't get the other player's message
+
+      // TODO: It doesn't get the other turn's message for either player
+    }
   }
