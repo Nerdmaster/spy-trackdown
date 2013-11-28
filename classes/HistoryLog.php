@@ -68,4 +68,11 @@ class HistoryLog {
     $entries = $this->filter_log_entries(array("player" => $player, "turn" => $turn, "public" => false));
     return array_map(function($entry) { return $entry->message; }, $entries);
   }
+
+  /**
+   * Returns public messages for the given turn
+   */
+  public function get_turn_messages($turn) {
+    return $this->filter_log_entries(array("turn" => $turn, "public" => true));
+  }
 }

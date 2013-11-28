@@ -54,4 +54,36 @@
       $this->assertEquals($p1_expected_messages, $f($this->player1, 1));
       $this->assertEquals($p2_expected_messages, $f($this->player2, 1));
     }
+
+    public function test_get_turn_messages() {
+      // This is an alias, not a hack
+      $h = $this->h;
+      $f = function($turn) use($h) {
+        return $h->get_turn_messages($turn);
+      };
+
+      // It gets all public messages for the given turn
+      $h->add(1, $this->player1, "t1p1", true);
+      $h->add(1, $this->player1, "t1p1-priv", false);
+      $h->add(1, $this->player2, "t1p2", true);
+      $h->add(1, $this->player2, "t1p2-priv", false);
+      $h->add(2, $this->player1, "t2p1", true);
+      $h->add(2, $this->player1, "t2p1-priv", false);
+      $h->add(2, $this->player2, "t2p2", true);
+      $h->add(2, $this->player2, "t2p2-priv", false);
+
+      $entries = $f(1);
+      $this->assertEquals(2, count($entries));
+      foreach ($entries as $entry) {
+        $this->assertEquals(1, $entry->turn);
+        $this->assertEquals(true, $entry->public);
+      }
+
+      $entries = $f(2);
+      $this->assertEquals(2, count($entries));
+      foreach ($entries as $entry) {
+        $this->assertEquals(2, $entry->turn);
+        $this->assertEquals(true, $entry->public);
+      }
+    }
   }
