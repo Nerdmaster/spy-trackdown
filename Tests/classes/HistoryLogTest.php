@@ -30,7 +30,7 @@
       // It gets the private message
       $this->h->add(1, $this->player1, "This is a public message", true);
       $this->h->add(1, $this->player1, "This is a private message", false);
-      $this->assertEquals(array("This is a private message"), $this->h->get_secret_message($this->player1, 1));
+      $this->assertEquals(array("This is a private message"), $this->h->get_secret_messages($this->player1, 1));
 
       // TODO: It doesn't get the other player's message
 

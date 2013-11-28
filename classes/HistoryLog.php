@@ -64,7 +64,7 @@ class HistoryLog {
   /**
    * Returns the given player's secret messages for a specific turn
    */
-  public function get_secret_message($player, $turn) {
+  public function get_secret_messages($player, $turn) {
     $entries = $this->filter_log_entries(array("player" => $player, "turn" => $turn, "public" => false));
     return array_map(function($entry) { return $entry->message; }, $entries);
   }
