@@ -27,10 +27,17 @@
     }
 
     public function test_get_secret_message() {
+      // This is an alias, not a hack
+      $h = $this->h;
+      $f = function($player, $turn) use($h) {
+        return $h->get_secret_messages($player, $turn);
+      };
+
       // It gets the private message
-      $this->h->add(1, $this->player1, "This is a public message", true);
-      $this->h->add(1, $this->player1, "This is a private message", false);
-      $this->assertEquals(array("This is a private message"), $this->h->get_secret_messages($this->player1, 1));
+      $h->add(1, $this->player1, "This is a public message", true);
+      $h->add(1, $this->player1, "This is a private message", false);
+      $p1_expected_messages = array("This is a private message");
+      $this->assertEquals($p1_expected_messages, $f($this->player1, 1));
 
       // TODO: It doesn't get the other player's message
 
