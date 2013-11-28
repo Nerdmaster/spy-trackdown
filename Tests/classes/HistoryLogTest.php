@@ -26,7 +26,7 @@
       $this->assertEquals(2, count($this->h->log()));
     }
 
-    public function test_get_secret_message() {
+    public function test_get_secret_messages() {
       // This is an alias, not a hack
       $h = $this->h;
       $f = function($player, $turn) use($h) {
