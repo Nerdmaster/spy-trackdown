@@ -23,6 +23,9 @@ class Game {
   /** Whose turn is it (index into players array)? */
   private $current_player;
 
+  /** Game history */
+  private $history;
+
   /**
    * Game status - are we waiting on a player to take an action?  Waiting to give a secret
    * message?  Ready for the next player?
@@ -46,6 +49,7 @@ class Game {
     $this->status = self::STATUS_PRE_GAME;
     $this->current_turn = 0;
     $this->current_action = 0;
+    $this->history = new HistoryLog();
   }
 
   /**
@@ -135,6 +139,9 @@ class Game {
       $player->location($player_location);
     }
 
+    // TODO: Centralize all turn-starting logic - history log, action = 1, status set
+    $this->record_public_history("Starting turn");
+
     // Set up turn
     $this->current_turn = 1;
     $this->current_action = 1;
@@ -148,6 +155,7 @@ class Game {
   public function start_turn() {
     $this->validate_status(self::STATUS_READY_FOR_PLAYER, "Cannot start turn from this status");
     $this->status = self::STATUS_AWAITING_ACTION;
+    $this->record_public_history(sprintf("%s is on the move...", $this->current_player()->name()));
   }
 
   /**
@@ -171,9 +179,59 @@ class Game {
       throw new InvalidTravelError("Cannot travel from here via $travel_text");
     }
 
-    // All is well - move the player and end this action
+    // All is well - move the player
     $player->location($new_zone->code());
+
+    // Record history
+    $zone = new MapZoneDisplay($new_zone);
+    $this->record_public_history(sprintf(
+      "%s traveled to %s via %s",
+      $player->name(),
+      $new_zone->name(),
+      $travel_text
+    ));
+
     $this->end_action();
+  }
+
+  /**
+   * Stores a message into the history log
+   *
+   * @param string $message
+   *   Text of the message as it will be displayed to users
+   *
+   * @param integer $public
+   *   Who can see the message - true for public, false for current player
+   */
+  private function record_history($message, $public) {
+    $history->add($this->current_turn, $this->current_player(), $message, $public);
+  }
+
+  /**
+   * Stores a public message into the history log
+   */
+  private function record_public_history($message) {
+    $this->record_history($message, true);
+  }
+
+  /**
+   * Stores a private message for a specific player
+   */
+  private function record_private_history($message) {
+    $this->record_history($message, false);
+  }
+
+
+  /**
+   * TODO: Sets up the end-of-turn secret message, which is always letting a player know one of the
+   * following:
+   * - You are x spaces from the covert operative in this region.
+   * - You have already found the covert op in this region.  Leave the region to get your cards.
+   * - You have already found the covert op in this region and claimed your cards.
+   * - You have just landed on the covert operative in this region!  Leave the region to claim your cards.
+   */
+  private function set_end_turn_secret_message() {
+    $this->record_private_history("This is a blank secret message");
   }
 
   /**
@@ -184,6 +242,7 @@ class Game {
     $this->current_action++;
 
     if ($this->current_action > 2) {
+      $this->set_end_turn_secret_message();
       $this->status = self::STATUS_AWAITING_SECRET_MESSAGE;
     }
   }
