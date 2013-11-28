@@ -1,6 +1,7 @@
 <?php
 
 require_class("Map");
+require_class("displays/MapZone");
 require_class("Player");
 require_once(ROOT . '/classes/errors.php');
 
@@ -140,12 +141,11 @@ class Game {
     }
 
     // TODO: Centralize all turn-starting logic - history log, action = 1, status set
-    $this->record_public_history("Starting turn");
-
     // Set up turn
     $this->current_turn = 1;
     $this->current_action = 1;
     $this->current_player = 0;
+    $this->record_public_history("Starting turn");
     $this->status = self::STATUS_READY_FOR_PLAYER;
   }
 
@@ -187,7 +187,7 @@ class Game {
     $this->record_public_history(sprintf(
       "%s traveled to %s via %s",
       $player->name(),
-      $new_zone->name(),
+      $zone->name(),
       $travel_text
     ));
 
@@ -204,7 +204,7 @@ class Game {
    *   Who can see the message - true for public, false for current player
    */
   private function record_history($message, $public) {
-    $history->add($this->current_turn, $this->current_player(), $message, $public);
+    $this->history->add($this->current_turn, $this->current_player(), $message, $public);
   }
 
   /**
