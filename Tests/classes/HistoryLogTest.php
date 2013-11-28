@@ -39,8 +39,19 @@
       $p1_expected_messages = array("This is a private message");
       $this->assertEquals($p1_expected_messages, $f($this->player1, 1));
 
-      // TODO: It doesn't get the other player's message
+      // It doesn't get the other player's message
+      $h->add(1, $this->player2, "This is a public message for player 2", true);
+      $h->add(1, $this->player2, "This is a private message for player 2", false);
+      $p2_expected_messages = array("This is a private message for player 2");
+      $this->assertEquals($p1_expected_messages, $f($this->player1, 1));
+      $this->assertEquals($p2_expected_messages, $f($this->player2, 1));
 
-      // TODO: It doesn't get the other turn's message for either player
+      // It doesn't get the other turn's message for either player
+      $h->add(2, $this->player1, "This is a public message for turn 2", true);
+      $h->add(2, $this->player1, "This is a private message for turn 2", false);
+      $h->add(2, $this->player2, "This is a public message for player 2 for turn 2", true);
+      $h->add(2, $this->player2, "This is a private message for player 2 for turn 2", false);
+      $this->assertEquals($p1_expected_messages, $f($this->player1, 1));
+      $this->assertEquals($p2_expected_messages, $f($this->player2, 1));
     }
   }
