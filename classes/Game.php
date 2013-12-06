@@ -142,10 +142,16 @@ class Game {
 
     // TODO: Centralize all turn-starting logic - history log, action = 1, status set
     // Set up turn
-    $this->current_turn = 1;
+    $this->initialize_next_turn();
+  }
+
+  private function initialize_next_turn() {
     $this->current_action = 1;
-    $this->current_player = 0;
-    $this->record_public_history("Starting turn");
+    $this->next_player();
+    if ($this->current_player == 0) {
+      $this->record_public_history("Starting turn");
+      $this->current_turn++;
+    }
     $this->status = self::STATUS_READY_FOR_PLAYER;
   }
 
@@ -162,6 +168,11 @@ class Game {
    * Rotates current player to whoever is next
    */
   private function next_player() {
+    if ($this->current_player === null) {
+      $this->current_player = 0;
+      return;
+    }
+
     $this->current_player = ($this->current_player + 1) % count($this->players);
   }
 
@@ -272,9 +283,6 @@ class Game {
    */
   public function end_turn() {
     $this->validate_status(self::STATUS_PLAYER_TURN_END, "Cannot end turn from this status");
-    $this->next_player();
-    $this->current_action = 1;
-    $this->record_public_history("Starting turn");
-    $this->status = self::STATUS_READY_FOR_PLAYER;
+    $this->initialize_next_turn();
   }
 }
