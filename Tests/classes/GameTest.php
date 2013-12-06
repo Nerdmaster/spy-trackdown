@@ -49,7 +49,16 @@
       // We're now waiting for the player to get their secret message
       $this->assertEquals($g->status(), Game::STATUS_PLAYER_TURN_END);
 
-      // TODO: Test secret message, control switching to new player, and eventually control going
-      // back to the first player
+      // We should have a secret message
+      $msgs = $g->get_current_turn_private_messages();
+      $this->assertEquals(1, count($msgs));
+      $this->assertNotEmpty($msgs[0]);
+
+      // TODO: Verify control switches to the other player
+
+      // TODO: Turn is still 1
+
+      // TODO: Run through turn and verify after Goldhawk's turn, Blackfire has
+      // control, turn is 2, etc
     }
   }

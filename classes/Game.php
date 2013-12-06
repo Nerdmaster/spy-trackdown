@@ -235,6 +235,13 @@ class Game {
   }
 
   /**
+   * Returns the current player's private messages for the current turn
+   */
+  public function get_current_turn_private_messages() {
+    return $this->history->get_secret_messages($this->current_player(), $this->current_turn);
+  }
+
+  /**
    * Ends a player's action.  If it's their last action, sets internal status to indicate it's
    * time for their secret message.
    */
