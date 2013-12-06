@@ -54,9 +54,15 @@
       $this->assertEquals(1, count($msgs));
       $this->assertNotEmpty($msgs[0]);
 
-      // TODO: Verify control switches to the other player
+      // Verify control switches to the other player
+      $g->end_turn();
+      $this->assertEquals($g->status(), Game::STATUS_READY_FOR_PLAYER);
+      $p = $g->current_player();
+      $this->assertEquals($p->name(), "Goldhawk");
+      $this->assertEquals($g->current_action(), 1);
 
-      // TODO: Turn is still 1
+      // Turn is still 1
+      $this->assertEquals($g->current_turn(), 1);
 
       // TODO: Run through turn and verify after Goldhawk's turn, Blackfire has
       // control, turn is 2, etc

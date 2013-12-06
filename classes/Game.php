@@ -159,6 +159,13 @@ class Game {
   }
 
   /**
+   * Rotates current player to whoever is next
+   */
+  private function next_player() {
+    $this->current_player = ($this->current_player + 1) % count($this->players);
+  }
+
+  /**
    * Moves a player by the given travel method.
    *
    * TODO: Split this up into more "do one thing" functions :(
@@ -258,5 +265,16 @@ class Game {
       $this->set_end_turn_secret_message();
       $this->status = self::STATUS_PLAYER_TURN_END;
     }
+  }
+
+  /**
+   * Ends current player's turn, setting status to be ready for next player
+   */
+  public function end_turn() {
+    $this->validate_status(self::STATUS_PLAYER_TURN_END, "Cannot end turn from this status");
+    $this->next_player();
+    $this->current_action = 1;
+    $this->record_public_history("Starting turn");
+    $this->status = self::STATUS_READY_FOR_PLAYER;
   }
 }
