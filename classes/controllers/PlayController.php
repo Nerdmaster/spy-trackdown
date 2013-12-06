@@ -81,7 +81,7 @@ class PlayController extends BaseController{
         $this->template = "play/phone";
         break;
 
-      case Game::STATUS_AWAITING_SECRET_MESSAGE:
+      case Game::STATUS_PLAYER_TURN_END:
         throw new Exception("Not implemented!");
         break;
 

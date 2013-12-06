@@ -47,7 +47,7 @@
       $this->assertEquals($p->location(), $zone->code());
 
       // We're now waiting for the player to get their secret message
-      $this->assertEquals($g->status(), Game::STATUS_AWAITING_SECRET_MESSAGE);
+      $this->assertEquals($g->status(), Game::STATUS_PLAYER_TURN_END);
 
       // TODO: Test secret message, control switching to new player, and eventually control going
       // back to the first player

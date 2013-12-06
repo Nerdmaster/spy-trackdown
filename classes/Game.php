@@ -35,7 +35,7 @@ class Game {
   const STATUS_PRE_GAME = 0;
   const STATUS_READY_FOR_PLAYER = 1;
   const STATUS_AWAITING_ACTION = 2;
-  const STATUS_AWAITING_SECRET_MESSAGE = 3;
+  const STATUS_PLAYER_TURN_END = 3;
   const STATUS_GAME_OVER = 4;
 
   /** Array of region => covert op map zone */
@@ -243,7 +243,7 @@ class Game {
 
     if ($this->current_action > 2) {
       $this->set_end_turn_secret_message();
-      $this->status = self::STATUS_AWAITING_SECRET_MESSAGE;
+      $this->status = self::STATUS_PLAYER_TURN_END;
     }
   }
 }
