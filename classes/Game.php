@@ -179,8 +179,14 @@ class Game {
       throw new InvalidTravelError("Cannot travel from here via $travel_text");
     }
 
+    // TODO: Check for traps / closures
+
     // All is well - move the player
     $player->location($new_zone->code());
+
+    // TODO: If the move took us off the continent, check for receiving cards
+    // and set some flag / history message / ??? to let players know if cards
+    // need to be taken
 
     // Record history
     $zone = new MapZoneDisplay($new_zone);

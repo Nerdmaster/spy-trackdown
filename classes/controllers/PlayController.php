@@ -82,6 +82,7 @@ class PlayController extends BaseController{
         break;
 
       case Game::STATUS_PLAYER_TURN_END:
+        // TODO: Show secret message (overlay hides it until click)
         throw new Exception("Not implemented!");
         break;
 
