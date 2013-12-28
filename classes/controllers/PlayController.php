@@ -82,8 +82,9 @@ class PlayController extends BaseController{
         break;
 
       case Game::STATUS_PLAYER_TURN_END:
-        // TODO: Show secret message (overlay hides it until click)
-        throw new Exception("Not implemented!");
+        $messages = $this->game->get_current_turn_private_messages();
+        $this->variable("secret_messages", $messages);
+        $this->template = "play/secret_message";
         break;
 
       case Game::STATUS_GAME_OVER:
