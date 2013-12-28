@@ -22,7 +22,7 @@ class PlayController extends BaseController{
   }
 
   public function process() {
-    $actions = array("show", "action_start_turn", "action_travel");
+    $actions = array("show", "action_start_turn", "action_end_turn", "action_travel");
     if (!in_array($this->action, $actions)) {
       $this->http_status = 'HTTP/1.1 404 Not Found';
       $this->text = "Invalid action, " . htmlspecialchars($this->action) .
@@ -124,6 +124,15 @@ class PlayController extends BaseController{
       return;
     }
 
+    $this->game_store->save();
+    $this->redirect_to("/play/show/{$this->game_store->id()}");
+  }
+
+  /**
+   * Response for POST /play/action_end_turn - simply moves game state forward
+   */
+  private function render_action_end_turn() {
+    $this->game->end_turn();
     $this->game_store->save();
     $this->redirect_to("/play/show/{$this->game_store->id()}");
   }
