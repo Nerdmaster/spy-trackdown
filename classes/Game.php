@@ -140,7 +140,6 @@ class Game {
       $player->location($player_location);
     }
 
-    // TODO: Centralize all turn-starting logic - history log, action = 1, status set
     // Set up turn
     $this->initialize_next_turn();
   }
