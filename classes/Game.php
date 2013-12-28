@@ -3,6 +3,7 @@
 require_class("Map");
 require_class("displays/MapZone");
 require_class("Player");
+require_class("HistoryLog");
 require_once(ROOT . '/classes/errors.php');
 
 /**
