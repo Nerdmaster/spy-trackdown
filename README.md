@@ -6,6 +6,20 @@ Trackdown.  It's built assuming you run a LAMP environment, so if you aren't,
 and you manage to get it working anyway, please feel free to send me details,
 and I'll add that here.
 
+Quick Note
+-----
+
+This is NOT ready for use.  It's not really even ready for playing with the
+code other than perhaps as a pre-alpha state of what I hope to accomplish
+someday sort of soon.  I'm pushing to github so I can reuse some of the PHP
+stuff I've learned as I started building this.  Unrelated family insanity has
+me working crazy hours for at least another month, at which point I hope to
+continue this project, but for now it's pretty much dead code.
+
+Note also that this doc isn't particularly useful, either.  The install guide,
+for instance, speaks of a database script that currently doesn't even have any
+relevancy at the moment.
+
 Installing
 -----
 
