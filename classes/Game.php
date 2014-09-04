@@ -10,6 +10,15 @@ require_once(ROOT . '/classes/errors.php');
  * Holds all top-level data necessary to run a game.  Violates SRP like mad for simplicity
  */
 class Game {
+  // Rule constants - may make sense to make this configurable instead - if
+  // not, we probably want these in their own class at least
+
+  /** Cards awarded when a player is the first to discover a covert op */
+  const COVERT_OPS_STARTING_VALUE = 4;
+
+  /** Cards awarded for next player = current value + this constant */
+  const COVERT_OPS_VALUE_CHANGE_PER_DISCOVERY = -1;
+
   /** Unique name to identify a game in case cookie is lost or something */
   private $name;
 
@@ -39,8 +48,14 @@ class Game {
   const STATUS_PLAYER_TURN_END = 3;
   const STATUS_GAME_OVER = 4;
 
-  /** Array of region => covert op map zone */
-  private $covert_ops_locations;
+  /** Array of covert op information:
+   *
+   * [region] => array(
+   *   'zone' => covert op map zone,
+   *   'value' => cards rewarded for next player finding this operative
+   * )
+   */
+  private $covert_ops_data;
 
   /** Map zone for mastermind */
   private $mastermind_location;
@@ -120,9 +135,9 @@ class Game {
       throw new Exception("Cannot start a game without players!");
     }
 
-    // Set up players, mastermind, and covert ops locations
+    // Set up players, mastermind, and covert ops data
     $all_zones = Map::zones();
-    $this->covert_ops_locations = array();
+    $this->covert_ops_data = array();
     $this->mastermind_location = $all_zones[array_rand($all_zones)]->code();
 
     foreach (Region::regions() as $region) {
@@ -132,7 +147,10 @@ class Game {
         continue;
       }
       $code = $zones[array_rand($zones)]->code();
-      $this->covert_ops_locations[$region] = $code;
+      $this->covert_ops_data[$region] = array(
+        'zone'  => $code,
+        'value' => self::COVERT_OPS_STARTING_VALUE
+      );
     }
 
     // Set up player location
